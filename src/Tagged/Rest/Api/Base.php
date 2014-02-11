@@ -64,7 +64,7 @@ class Base {
 
     // alias for _customCollectionHandler
     protected function _customHandler($action, $method) {
-        $this->customCollectionHandler($action, $method);
+        $this->_customCollectionHandler($action, $method);
     }
 
     protected function _validateInputFor($method, $args) {
