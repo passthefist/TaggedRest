@@ -4,8 +4,11 @@ Restful routing/controllers
 Tagged/Rest is a small framework for creating restful api's in object oriented controllers
 rather than callbacks. It comes with powerful validation from the json schema project, and
 api methods both respond to http requests and can be called internally as normal object
-methods. The framework is focused only on handling http requests, leaving the rest of the
-project for other frameworks or existing code.
+methods. There's also a mechanism to dynamically generate documentation for all api endpoints
+for free, just hit the url with an OPTIONS request.
+
+The framework is focused only on handling http requests, leaving the rest of the
+project for other frameworks or existing code. 
 
 Really, this is just a wrapper around [Klein](https://github.com/chriso/klein.php) that allows for 
 easy construction of restful urls and controllers.
@@ -254,6 +257,21 @@ $photoObj = $photoApi->fetch(array(
 
 Of course, the other method is to instantiate the object and call the methods as a normal object.
 Calling a method directly kinda sucks since all the controllers expect stdClass objects.
+
+Auto API Documentaion
+-
+Documentation is important for an API, and this framework provides a mechanism to automatically
+produce documentation for free.
+
+Hitting any api with an OPTIONS request will return an html page with the documentation for that
+api. The documentation comes from both doc comments on the class and from the schema specified
+for the api methods.
+
+There are plans to add a single endpoint that acts as a collection of this documentation, so that
+all apis are easily discoverable.
+
+Because the documentation is generated dynamically it will always match the code, rather than requiring
+a job to be run to keep the documentation and api in sync.
 
 Notes
 -
