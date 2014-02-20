@@ -210,10 +210,6 @@ MSG
     public function makeRoute($route, $httpMethod, $controller, $action) {
         $router = $this;
 
-        $c = get_class($controller);
-
-        //echo "Making route <p>$route => $c::$action</p>";
-
         $mappedRoute = $this->klein->respond($httpMethod, $route, function ($request, $response) use ($router, $controller, $action) {
             $controller->invokeWithRequest($action,$request, $response);
         });

@@ -10,17 +10,11 @@ class RawWrapper extends Base {
     }
 
     public function getCollectionMethods() {
-        return array_intersect(
-            get_class_methods($this->controller),
-            array_keys($this->collectionMapping)
-        );
+        return $this->controller->getCollectionMethods();
     }
 
     public function getResourceMethods() {
-        return array_intersect(
-            get_class_methods($this->controller),
-            array_keys($this->resourceMapping)
-        );
+        return $this->controller->getResourceMethods();
     }
 
     public function __call($method, $args) {
