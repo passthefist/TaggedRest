@@ -71,6 +71,19 @@ and **/api/v1/users/[i:userid]/photos/[i:photoid]** as a resource.
 This is determined by the convention of resource routes ending in an id/paramter (*/[i:photoid]*) 
 and collections ending in the name of the collection (*/photos*).
 
+
+Validation
+-
+
+Validation is done using a json schema validator. The query/form parameters are treated as a nested
+json structure. This structure comes from php's built in query deserialization. 
+Query params like '?item[key]=value' are serialized as an array like ```array( 'item' => array('key'=>'value'))```.
+
+This is fed into a validator that ensures the query parameters are structured how the API expects. For more info
+on json schema syntax and options, check http://json-schema.org/.
+
+The schemas for each controller function are registered in the constructor.
+
 Controllers
 -
 Controllers handle the http request. A handler method expects to be passed a stdClass object.
@@ -189,13 +202,6 @@ protected function _formatOutput($method, $data, $format) {
   }
 }
 ```
-
-Validation
--
-
-Validation is done using a json schema validator. The query/form parameters are treated as a nested
-json structure. This structure comes from php's built in query deserialization. 
-Query params like '?item[key]=value' are serialized as an array like ```array( 'item' => array('key'=>'value'))```
 
 Usage
 -
