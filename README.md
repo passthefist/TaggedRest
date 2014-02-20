@@ -89,7 +89,7 @@ Controllers
 Controllers handle the http request. A handler method expects to be passed a stdClass object.
 The value returned by the method becomes the body of the http request.
 
-The default mapping is below, this can be overridden in the main router object. Controllers don't need to extend anything, they just need to implement any of these methods. Methods not implemented become HTTP 405 errors when requested.
+The default mapping is below, but can be overridden. Methods not implemented become HTTP 405 errors when requested.
 
 Every controller method is passed a response and request object. Check https://github.com/chriso/klein.php/wiki/Api for documentation.
 
