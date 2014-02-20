@@ -96,7 +96,7 @@ class Base {
     /*
      * Get a full mapping of all methods and http actions
      */
-    public function methodMapping() {
+    protected function methodMapping() {
         return array_merge(
             $this->resourceMapping,
             $this->collectionMapping
@@ -136,7 +136,7 @@ class Base {
      * Call this if you want to filter the input using the
      * schema registered for the method
      */
-    public function invoke($method, $params) {
+    public function invoke($method, array $params) {
         $params = $this->_validateInputFor($method, $params);
 
         $params = json_decode(json_encode($params));
@@ -144,7 +144,7 @@ class Base {
         return $this->$method($params);
     }
 
-    public function invokeWithRequest($action, $request, $response) {
+    public function invokeWithRequest($action, \Klein\Request $request, \Klein\Response $response) {
         $params = $request->params();
 
         $result = $this->invoke($action,$params);
@@ -155,7 +155,8 @@ class Base {
 
     /*
      * Override in the subclass to have different formats
-     * for an http request
+     * for an http request. This only works for http requests
+     * and not for internal code calls
      */
     protected function _formatResponse($action,$result,$format) {
         return json_encode($result);
