@@ -23,9 +23,7 @@ class RawWrapper extends Base {
         }
 
         if ($this->controller->respondsTo($method)) {
-            $args = json_decode(json_encode($args[0]));
-
-            $result = $this->controller->invoke($method, $args);
+            $result = $this->controller->invoke($method, $args[0]);
             return  json_decode(json_encode($result));
         }
 
