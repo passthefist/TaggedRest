@@ -95,6 +95,11 @@ MSG
         return $response;
     }
 
+    public function parseControllerCallback($controller) {
+        list($class,$method) = explode('::',$controller);
+        return array($class, $method);
+    }
+
     /**
      * Returns the name of the class for the controller
      */
@@ -157,13 +162,24 @@ MSG
      * Would call the message search() on the messages controller
      */
     public function routeCollection($route, $controller) {
+        list($controller, $method) = $this->parseControllerCallback($controller);
+
         $controller = $this->loadController($controller);
 
-        $methods = $controller->getCollectionMethods();
+        if ($method == null) {
+            $methods = $controller->getCollectionMethods();
 
-        foreach($methods as $method) {
-            $httpAction = $controller->actionFor($method);
+            foreach($methods as $method) {
+                $httpAction = $controller->actionFor($method);
 
+                $mappedRoute = $this->makeRoute(
+                    $route,
+                    $httpAction,
+                    $controller,
+                    $method
+                );
+            }
+        } else {
             $mappedRoute = $this->makeRoute(
                 $route,
                 $httpAction,
@@ -182,13 +198,24 @@ MSG
      * HTTP DELETE: controller->delete()
      */
     public function routeResource($route, $controller) {
+        list($controller, $method) = $this->parseControllerCallback($controller);
+
         $controller = $this->loadController($controller);
 
-        $methods = $controller->getResourceMethods();
+        if ($method == null) {
+            $methods = $controller->getResourceMethods();
 
-        foreach($methods as $method) {
-            $httpAction = $controller->actionFor($method);
+            foreach($methods as $method) {
+                $httpAction = $controller->actionFor($method);
 
+                $mappedRoute = $this->makeRoute(
+                    $route,
+                    $httpAction,
+                    $controller,
+                    $method
+                );
+            }
+        } else {
             $mappedRoute = $this->makeRoute(
                 $route,
                 $httpAction,
