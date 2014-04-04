@@ -166,11 +166,12 @@ MSG
 
         $controller = $this->loadController($controller);
 
+        $httpAction = $controller->actionFor($method);
+
         if ($method == null) {
             $methods = $controller->getCollectionMethods();
 
             foreach($methods as $method) {
-                $httpAction = $controller->actionFor($method);
 
                 $mappedRoute = $this->makeRoute(
                     $route,
@@ -202,11 +203,12 @@ MSG
 
         $controller = $this->loadController($controller);
 
+        $httpAction = $controller->actionFor($method);
+
         if ($method == null) {
             $methods = $controller->getResourceMethods();
 
             foreach($methods as $method) {
-                $httpAction = $controller->actionFor($method);
 
                 $mappedRoute = $this->makeRoute(
                     $route,
