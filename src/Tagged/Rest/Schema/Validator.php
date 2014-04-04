@@ -13,7 +13,13 @@ class Validator {
 
     public function validate($data) {
 
-        $result = \Jsv4::coerce(json_decode(json_encode($data)), $this->schemaObj);
+        if (empty($data)) {
+            $objData = new \stdClass();
+        } else {
+            $objData = json_decode(json_encode($data));
+        }
+
+        $result = \Jsv4::coerce($objData, $this->schemaObj);
 
         if (!$result->valid) {
             throw new \Exception($result->errors[0]->message, 400);

@@ -22,8 +22,14 @@ class RawWrapper extends Base {
             throw new \BadMethodCallException("Method '$method' does not exist");
         }
 
+        if (empty($args)) {
+            $fixedArgs = array();
+        } else {
+            $fixedArgs = $args[0];
+        }
+
         if ($this->controller->respondsTo($method)) {
-            $result = $this->controller->invoke($method, $args[0]);
+            $result = $this->controller->invoke($method, $fixedArgs);
             return  json_decode(json_encode($result));
         }
 
