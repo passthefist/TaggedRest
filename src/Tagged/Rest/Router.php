@@ -96,8 +96,12 @@ MSG
     }
 
     public function parseControllerCallback($controller) {
-        list($class,$method) = explode('::',$controller);
-        return array($class, $method);
+        $parts = explode('::',$controller);
+        if (count($parts) === 2) {
+            return $parts;
+        } else {
+            return array($parts[0],null);
+        }
     }
 
     /**
@@ -167,10 +171,11 @@ MSG
         $controller = $this->loadController($controller);
 
         if ($method == null) {
+            $httpAction = $controller->actionFor($method);
+
             $methods = $controller->getCollectionMethods();
 
             foreach($methods as $method) {
-                $httpAction = $controller->actionFor($method);
 
                 $mappedRoute = $this->makeRoute(
                     $route,
@@ -182,7 +187,7 @@ MSG
         } else {
             $mappedRoute = $this->makeRoute(
                 $route,
-                $httpAction,
+                'POST',
                 $controller,
                 $method
             );
@@ -203,10 +208,11 @@ MSG
         $controller = $this->loadController($controller);
 
         if ($method == null) {
+            $httpAction = $controller->actionFor($method);
+
             $methods = $controller->getResourceMethods();
 
             foreach($methods as $method) {
-                $httpAction = $controller->actionFor($method);
 
                 $mappedRoute = $this->makeRoute(
                     $route,
@@ -218,7 +224,7 @@ MSG
         } else {
             $mappedRoute = $this->makeRoute(
                 $route,
-                $httpAction,
+                'POST',
                 $controller,
                 $method
             );
