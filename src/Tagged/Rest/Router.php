@@ -167,10 +167,11 @@ MSG
         $controller = $this->loadController($controller);
 
         if ($method == null) {
+            $httpAction = $controller->actionFor($method);
+
             $methods = $controller->getCollectionMethods();
 
             foreach($methods as $method) {
-                $httpAction = $controller->actionFor($method);
 
                 $mappedRoute = $this->makeRoute(
                     $route,
@@ -182,7 +183,7 @@ MSG
         } else {
             $mappedRoute = $this->makeRoute(
                 $route,
-                $httpAction,
+                'POST',
                 $controller,
                 $method
             );
@@ -203,10 +204,11 @@ MSG
         $controller = $this->loadController($controller);
 
         if ($method == null) {
+            $httpAction = $controller->actionFor($method);
+
             $methods = $controller->getResourceMethods();
 
             foreach($methods as $method) {
-                $httpAction = $controller->actionFor($method);
 
                 $mappedRoute = $this->makeRoute(
                     $route,
@@ -218,7 +220,7 @@ MSG
         } else {
             $mappedRoute = $this->makeRoute(
                 $route,
-                $httpAction,
+                'POST',
                 $controller,
                 $method
             );
